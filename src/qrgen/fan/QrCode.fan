@@ -42,14 +42,13 @@ class QrCode
       "## QR CODE ##
        version: $c.version
        size:    $c.size
+       text:    $s
        ")
     buf := StrBuf()
-    ly := 0
     c.eachModule |x,y,v|
     {
-      if (y != ly) buf.add("\n")
-      ly = y
       buf.add(v ? "#" : " ")
+      if (x == c.size-1) buf.add("\n")
     }
     echo(buf.toStr)
     echo("")
