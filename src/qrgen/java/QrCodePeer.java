@@ -25,8 +25,6 @@ public class QrCodePeer
       case 2: jecc = JQrCode.Ecc.HIGH;   break;
     }
 
-    System.out.println("# jecc -> " + jecc);
-
     QrCode fcode = QrCode.make();
     fcode.peer.jcode = JQrCode.encodeText(s, jecc);
     return fcode;

@@ -19,6 +19,7 @@ class Build : build::BuildPod
     ]
     depends = [
       "sys 1.0",
+      "graphics 1.0",
     ]
     // resDirs = [`doc/`]
     srcDirs  = [`fan/`]
