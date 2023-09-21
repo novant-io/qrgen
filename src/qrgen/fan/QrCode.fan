@@ -13,7 +13,7 @@
 class QrCode
 {
   ** Encode the given string into a new 'QrCode' instance.
-  static native QrCode encodeStr(Str text)
+  static native QrCode encodeStr(Str text, QrEcc ecc := QrEcc.medium)
 
   ** Version of this code.
   native Int version()

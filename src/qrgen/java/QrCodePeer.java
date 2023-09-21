@@ -15,10 +15,20 @@ public class QrCodePeer
     return new QrCodePeer();
   }
 
-  public static QrCode encodeStr(String s)
+  public static QrCode encodeStr(String s, QrEcc ecc)
   {
+    JQrCode.Ecc jecc = JQrCode.Ecc.MEDIUM;
+    switch ((int)ecc.ordinal())
+    {
+      case 0: jecc = JQrCode.Ecc.LOW;    break;
+      case 1: jecc = JQrCode.Ecc.MEDIUM; break;
+      case 2: jecc = JQrCode.Ecc.HIGH;   break;
+    }
+
+    System.out.println("# jecc -> " + jecc);
+
     QrCode fcode = QrCode.make();
-    fcode.peer.jcode = JQrCode.encodeText(s, JQrCode.Ecc.MEDIUM);
+    fcode.peer.jcode = JQrCode.encodeText(s, jecc);
     return fcode;
   }
 
