@@ -3,19 +3,22 @@
 A Fantom API for generating QR codes.
 
 ```fantom
-// generate code
 c := QrCode.encodeStr("Hello World")
+c.renderPng(out)
+```
 
-// echo pixels to stdout
-buf := StrBuf()
-c.eachModule |x,y,v|
-{
-  buf.add(v ? "#" : " ")
-  if (x == c.size-1) buf.add("\n")
-}
-echo(buf.toStr)
+Command line utilties:
 
-// stdout
+```bash
+$ fan qrgen "Hello World" --png test.png
+
+$ fan qrgen "Hello World" --dump
+## QR CODE ##
+  text: Hello World
+  ver:  1
+  ecc:  medium
+  size: 21
+
 #######    #  #######
 #     # # ##  #     #
 # ### # ####  # ### #
@@ -39,4 +42,5 @@ echo(buf.toStr)
 #######   ## ###  #
 ```
 
-This project is based on and includes code from [QR-Code-generator](https://github.com/nayuki/QR-Code-generator).
+This project is based on and includes code from
+[QR-Code-generator](https://github.com/nayuki/QR-Code-generator).
