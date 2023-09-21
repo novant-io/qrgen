@@ -27,7 +27,7 @@ const class Main
         file := Env.cur.args.getSafe(2)
         if (file == null) abort("Missing filename")
         out  := File.os(file).out
-        code.renderPng(out)
+        code.renderPng(out, 256, 256)
         out.sync.close
 
       default:

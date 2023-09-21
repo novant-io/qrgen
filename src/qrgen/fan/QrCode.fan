@@ -34,11 +34,11 @@ const class QrCode
     }
   }
 
-  ** Render this code to a PNG image
-  Void renderPng(OutStream out, Int scale := 4)
+  ** Render this code to a PNG image. See `render` for details
+  ** on the behavoir on 'w' and 'h'.
+  Void renderPng(OutStream out, Int w, Int h)
   {
-    isz := size * scale
-    img := RenderedImage(isz, isz)
+    img := RenderedImage(w, h)
     gx  := img.graphics
 
     // fill white for "light" modules
@@ -47,28 +47,46 @@ const class QrCode
 
     // render code
     gx.color = Color.black
-    this.render(img.graphics, 0f, 0f, scale)
+    this.render(img.graphics, 0f, 0f, w.toFloat, h.toFloat)
 
     // write file
     img.write(out, "png")
   }
 
+  **
   ** Render this code to the given graphics context at the given
   ** offset and given scale factor. The current 'color' will be
   ** used for "dark" modules. The "light" modules will be left
   ** transparent.
-  Void render(Graphics g, Float x, Float y, Int scale := 4)
+  **
+  ** This method will always scale on a even pixel boundry, which
+  ** means target image may not match 'w' and 'h' exactly.  if
+  ** rendered image is smaller than the requested size, it will
+  ** be centered within the target bounds.
+  **
+  Void render(Graphics g, Float x, Float y, Float w, Float h)
   {
-    ss := scale.toFloat
+    // sanity checks
+    if (w < size.toFloat) throw ArgErr("render width must be > size")
+    if (h < size.toFloat) throw ArgErr("render height must be > size")
+
+    // scale factor
+    sx := (w / size.toFloat).floor
+    sy := (h / size.toFloat).floor
+
+    // center offset
+    cx := (w - (size * sx)) / 2
+    cy := (h - (size * sy)) / 2
+
     eachModule |mx, my, v|
     {
       // leave light modules transparent
       if (!v) return
 
       // dark module "pixel"
-      sx := mx * scale
-      sy := my * scale
-      g.fillRect(x+sx, x+sy, ss, ss)
+      dx := mx * sx
+      dy := my * sy
+      g.fillRect(x+cx+dx, y+cy+dy, sx, sy)
     }
   }
 
