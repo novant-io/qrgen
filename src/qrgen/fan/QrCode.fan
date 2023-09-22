@@ -35,21 +35,24 @@ const class QrCode
   }
 
   ** Render this code to a PNG image.
-  Void renderPng(OutStream out, Int w, Int h)
+  Void renderPng(OutStream out, Float w, Float h)
   {
-    img := RenderedImage(w, h)
-    gx  := img.graphics
+    // create img
+    mime := MimeType("image/png")
+    size := Size(w, h)
+    img  := Image.render(mime, size) |gx|
+    {
+      // fill white for "light" modules
+      gx.color = Color.white
+      gx.fillRect(0f, 0f, w, h)
 
-    // fill white for "light" modules
-    gx.color = Color.white
-    gx.fillRect(0f, 0f, img.size.w, img.size.h)
-
-    // render code
-    gx.color = Color.black
-    this.render(img.graphics, 0f, 0f, w.toFloat, h.toFloat)
+      // render code
+      gx.color = Color.black
+      this.render(gx, 0f, 0f, w, h)
+    }
 
     // write file
-    img.write(out, "png")
+    img.write(out)
   }
 
   ** Render this code to the given graphics context at the given

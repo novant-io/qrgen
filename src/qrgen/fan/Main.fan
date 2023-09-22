@@ -28,7 +28,7 @@ const class Main
         if (file == null) abort("Missing filename")
         out  := File.os(file).out
         // echo("# $code.size")
-        code.renderPng(out, 256, 256)
+        code.renderPng(out, 256f, 256f)
         out.sync.close
 
       default:
