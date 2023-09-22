@@ -27,6 +27,7 @@ const class Main
         file := Env.cur.args.getSafe(2)
         if (file == null) abort("Missing filename")
         out  := File.os(file).out
+        // echo("# $code.size")
         code.renderPng(out, 256, 256)
         out.sync.close
 

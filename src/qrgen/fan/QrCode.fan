@@ -34,8 +34,7 @@ const class QrCode
     }
   }
 
-  ** Render this code to a PNG image. See `render` for details
-  ** on the behavoir on 'w' and 'h'.
+  ** Render this code to a PNG image.
   Void renderPng(OutStream out, Int w, Int h)
   {
     img := RenderedImage(w, h)
@@ -53,41 +52,22 @@ const class QrCode
     img.write(out, "png")
   }
 
-  **
   ** Render this code to the given graphics context at the given
-  ** offset and given scale factor. The current 'color' will be
-  ** used for "dark" modules. The "light" modules will be left
-  ** transparent.
-  **
-  ** This method will always scale on a even pixel boundry, which
-  ** means target image may not match 'w' and 'h' exactly.  if
-  ** rendered image is smaller than the requested size, it will
-  ** be centered within the target bounds.
-  **
+  ** offset and size. The current 'color' will be used for "dark"
+  ** modules. The "light" modules will be left transparent.
   Void render(Graphics g, Float x, Float y, Float w, Float h)
   {
-    // sanity checks
-    if (w < size.toFloat) throw ArgErr("render width must be > size")
-    if (h < size.toFloat) throw ArgErr("render height must be > size")
-
     // scale factor
-    sx := (w / size.toFloat).floor
-    sy := (h / size.toFloat).floor
+    sx := w / size.toFloat
+    sy := h / size.toFloat
 
-    // center offset
-    cx := (w - (size * sx)) / 2
-    cy := (h - (size * sy)) / 2
-
-    eachModule |mx, my, v|
-    {
-      // leave light modules transparent
-      if (!v) return
-
-      // dark module "pixel"
-      dx := mx * sx
-      dy := my * sy
-      g.fillRect(x+cx+dx, y+cy+dy, sx, sy)
+    // scale to fit bounds and render
+    g.push(Rect(x, y, w, h))
+    g.transform(Transform.scale(sx, sy))
+    eachModule |mx, my, v| {
+      if (v) g.fillRect(mx.toFloat, my.toFloat, 1f, 1f)
     }
+    g.pop
   }
 
   private native Bool moduleAt(Int x, Int y)
