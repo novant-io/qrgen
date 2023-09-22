@@ -1,7 +1,7 @@
 # QrGen
 
 <p>
-  <img src="src/qrgen/doc/icon.png" style="max-width:160px" />
+  <img src="src/qrgen/doc/icon.png" style="width:160px" />
 </p>
 
 A Fantom API for generating QR codes.
