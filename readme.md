@@ -4,6 +4,15 @@
   <img src="src/qrgen/doc/icon.png" style="width:160px" />
 </p>
 
+## Installation
+
+Install into your current Fantom repo using fanr -- full API docs over on
+[Eggbox](http://eggbox.fantomfactory.org/pods/qrgen):
+
+$ fanr install qrgen
+
+## Usage
+
 A Fantom API for generating QR codes.
 
 ```fantom

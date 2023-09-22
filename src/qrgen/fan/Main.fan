@@ -6,7 +6,7 @@
 //   20 Sep 2023  Andy Frank  Creation
 //
 
-const class Main
+@NoDoc const class Main
 {
   Void main()
   {
