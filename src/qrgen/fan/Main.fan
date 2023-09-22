@@ -13,6 +13,19 @@ const class Main
     if (Env.cur.args.size < 2)
       abort("usage: fan qrgen <text> [--dump | --png <file>]")
 
+    if (Env.cur.args.first == "--podicon")
+    {
+      text := "https://github.com/novant-io/qrgen"
+      file := Env.cur.args.getSafe(1)
+      if (file == null) abort("Missing filename")
+      out  := File.os(file).out
+      code := QrCode.encodeStr(text, QrEcc.high)
+      // echo("# $code.size")
+      code.renderPng(out, 528f, 528f)
+      out.sync.close
+      return
+    }
+
     text := Env.cur.args.first
     ecc  := QrEcc.medium
     code := QrCode.encodeStr(text, ecc)

@@ -21,7 +21,7 @@ class Build : build::BuildPod
       "sys 1.0",
       "graphics 1.0",
     ]
-    // resDirs = [`doc/`]
+    resDirs  = [`doc/`]
     srcDirs  = [`fan/`]
     javaDirs = [`java/`]
     docApi = true
