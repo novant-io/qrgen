@@ -8,7 +8,7 @@ class Build : build::BuildPod
   {
     podName = "qrgen"
     summary = "QR code generator library"
-    version = Version("1.0")
+    version = Version("1.1")
     meta = [
       "org.name":     "Novant",
       "org.uri":      "https://novant.io/",
