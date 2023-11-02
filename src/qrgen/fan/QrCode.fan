@@ -69,6 +69,7 @@ const class QrCode
     g.transform(Transform.scale(sx, sy))
     eachModule |mx, my, v| {
       if (v) g.fillRect(mx.toFloat, my.toFloat, 1f, 1f)
+      // if (v) g.fillEllipse(mx.toFloat, my.toFloat, 1f, 1f)
     }
     g.pop
   }
